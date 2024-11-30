@@ -1,5 +1,5 @@
 {
-  "name": "webglo",
+  "name": "webz",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,9 +11,7 @@
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^5.0.0",
     "svelte": "^5.2.7",
+    "svelte-routing": "^2.13.0",
     "vite": "^6.0.1"
-  },
-  "dependencies": {
-    "svelte-routing": "^2.13.0"
   }
 }

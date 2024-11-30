@@ -7,3 +7,4 @@ class ContentItemViewSet(viewsets.ModelViewSet):
     queryset = ContentItem.objects.all()
     serializer_class = ContentItemSerializer
     permission_classes = [IsAdminUser]  # Solo permite usuarios admin
+    
