@@ -1,5 +1,6 @@
 <script>
   import { onMount } from 'svelte';
+  import gloglo from '../images/gloglo.png';
 
   let items = [];
   let loading = true;
@@ -7,7 +8,7 @@
 
   onMount(async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/content/');
+      const response = await fetch('http://localhost:3000/');
       items = await response.json();
     } catch (e) {
       error = 'Error al cargar los datos';
@@ -18,22 +19,18 @@
 </script>
 
 <div class="home-container">
-  <header class="hero">
-    <h1>Bienvenido a WebZ</h1>
-    <p>Descubre nuestra colección de contenido exclusivo</p>
-  </header>
-
-  <main class="content">
-    {#if loading}
-      <div class="loading">Cargando contenido...</div>
-    {:else if error}
-      <div class="error">{error}</div>
-    {:else}
-      <div class="grid">
-        {#each items as item}
+  {#if loading}
+    <div class="loading">Cargando contenido...</div>
+  {:else if error}
+    <div class="error">{error}</div>
+  {:else}
+    <div class="content-layout">
+      <!-- Cards izquierdas -->
+      <div class="cards-left">
+        {#each items.slice(0, 2) as item}
           <div class="card">
-            {#if item.image}
-              <img src={`http://localhost:8000${item.image}`} alt={item.title} />
+            {#if item.image_url}
+              <img src={`http://localhost:3000/${item.image_url}`} alt={item.name} />
             {/if}
             <div class="card-content">
               <h2>{item.title}</h2>
@@ -46,42 +43,64 @@
           </div>
         {/each}
       </div>
-    {/if}
-  </main>
+
+      <!-- Imagen central -->
+      <div class="center-image">
+        <img src={gloglo} alt="Gloglo" class="gloglo-image" />
+      </div>
+
+      <!-- Cards derechas -->
+      <div class="cards-right">
+        {#each items.slice(2, 4) as item}
+          <div class="card">
+            {#if item.image_url}
+              <img src={`http://localhost:3000/${item.image_url}`} alt={item.title} />
+              {console.log(`http://localhost:3000/${item.image_url}`)}
+            {/if}
+            <div class="card-content">
+              <h2>{item.title}</h2>
+              {#if item.link}
+                <a href={item.link} target="_blank" rel="noopener noreferrer" class="btn">
+                  Ver más
+                </a>
+              {/if}
+            </div>
+          </div>
+        {/each}
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style>
   .home-container {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 1rem;
+    padding: 2rem;
   }
 
-  .hero {
-    text-align: center;
-    padding: 4rem 0;
-    background: linear-gradient(135deg, #ff3e00 0%, #ff8700 100%);
-    color: white;
-    border-radius: 10px;
-    margin-bottom: 2rem;
-  }
-
-  .hero h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  .hero p {
-    font-size: 1.2rem;
-    opacity: 0.9;
-  }
-
-  .grid {
+  .content-layout {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: 1fr auto 1fr;
     gap: 2rem;
-    padding: 1rem;
+    align-items: center;
+  }
+
+  .center-image {
+    padding: 2rem;
+  }
+
+  .gloglo-image {
+    width: 500px;
+    height: 700px;
+    object-fit: contain;
+  }
+
+  .cards-left, .cards-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
   }
 
   .card {
@@ -140,17 +159,33 @@
     font-size: 1.2rem;
   }
 
-  @media (max-width: 768px) {
-    .hero {
-      padding: 2rem 0;
-    }
-
-    .hero h1 {
-      font-size: 2rem;
-    }
-
-    .grid {
+  @media (max-width: 1200px) {
+    .content-layout {
       grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+    }
+
+    .gloglo-image {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .cards-left, .cards-right {
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .card {
+      width: calc(50% - 1rem);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      width: 100%;
     }
   }
 </style>
