@@ -8,7 +8,7 @@
 
 <nav class="navbar">
   <div class="nav-brand">
-    <a href="/" class="logo">WebZ</a>
+    <a href="/" class="logo">Gloglokigs</a>
   </div>
 
   <button class="menu-button" on:click={toggleMenu}>
@@ -41,13 +41,13 @@
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
-    color: #ff3e00;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     transition: color 0.3s ease;
   }
 
   .logo:hover {
-    color: #ff6240;
+    color: #ac6151;
   }
 
   .nav-links {
@@ -80,7 +80,7 @@
   }
 
   .login-btn {
-    background: #ff3e00;
+    background: #000000;
     color: white;
     padding: 0.5rem 1rem;
     border-radius: 4px;

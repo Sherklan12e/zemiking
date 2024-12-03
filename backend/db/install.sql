@@ -1,2 +1,2 @@
-source database-movies.sql;
-source procedures-movies.sql;
+source database-movies.sql
+source procedures-movies.sql

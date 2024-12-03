@@ -108,11 +108,12 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease;
+    animation: float 2s ease-in-out infinite;
   }
 
   .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-15px);
+    animation-play-state: paused;
   }
 
   .card img {
@@ -187,5 +188,30 @@
     .card {
       width: 100%;
     }
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  .cards-left .card:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .cards-left .card:nth-child(2) {
+    animation-delay: 0.5s;
+  }
+  .cards-right .card:nth-child(1) {
+    animation-delay: 1s;
+  }
+  .cards-right .card:nth-child(2) {
+    animation-delay: 1.5s;
   }
 </style>
