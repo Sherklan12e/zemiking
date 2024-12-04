@@ -1,12 +1,19 @@
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
 
 const mysql = require('mysql2');
 
-const mysqlConnection = mysql.createConnection({
+// Logs para depuración
+console.log('Variables de entorno cargadas:', {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  database: process.env.DB_DATABASE
+});
+
+const mysqlConnection = mysql.createConnection({
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_DATABASE || 'movies',
   multipleStatements: true
 });
 
