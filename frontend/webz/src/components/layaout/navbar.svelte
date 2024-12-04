@@ -7,52 +7,44 @@
 </script>
 
 <nav class="navbar">
-  <div class="nav-brand">
-    <a href="/" class="logo">Gloglokigs</a>
-  </div>
+  <div class="nav-container">
+    <button class="menu-button" on:click={toggleMenu}>
+      <span class="hamburger" class:active={isMenuOpen}></span>
+    </button>
 
-  <button class="menu-button" on:click={toggleMenu}>
-    <span class="hamburger" class:active={isMenuOpen}></span>
-  </button>
-
-  <div class="nav-links" class:active={isMenuOpen}>
-    <a href="/" class="nav-link">Inicio</a>
-    <a href="/galeria" class="nav-link">Galería</a>
-    <a href="/contacto" class="nav-link">Contacto</a>
-    <a href="/admin" class="nav-link login-btn">Admin</a>
+    <div class="nav-links" class:active={isMenuOpen}>
+      <a href="/" class="nav-link">Inicio</a>
+      <a href="/galeria" class="nav-link">Galería</a>
+      <a href="/contacto" class="nav-link">Contacto</a>
+      <a href="/admin" class="nav-link">Admin</a>
+    </div>
   </div>
 </nav>
 
 <style>
   .navbar {
-    background: #ffffff;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    border-radius: 30px;
+    padding: 0.5rem 1.5rem;
+    width: auto;
+    min-width: 300px;
   }
 
-  .logo {
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    text-decoration: none;
-    transition: color 0.3s ease;
-  }
-
-  .logo:hover {
-    color: #ac6151;
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .nav-links {
     display: flex;
-    gap: 2rem;
+    gap: 1.5rem;
     align-items: center;
   }
 
@@ -60,39 +52,15 @@
     color: #333;
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.3s ease;
-    position: relative;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
   }
 
-  .nav-link:after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: -4px;
-    left: 0;
-    background-color: #ff3e00;
-    transition: width 0.3s ease;
-  }
-
-  .nav-link:hover:after {
-    width: 100%;
-  }
-
-  .login-btn {
-    background: #000000;
-    color: white;
-    padding: 0.5rem 1rem;
-    border-radius: 4px;
-    transition: background 0.3s ease;
-  }
-
-  .login-btn:hover {
-    background: #ff6240;
-  }
-
-  .login-btn:after {
-    display: none;
+  .nav-link:hover {
+    background: rgba(255, 255, 255, 0.3);
+    color: #ff3e00;
   }
 
   .menu-button {
@@ -103,34 +71,13 @@
     padding: 0.5rem;
   }
 
-  .hamburger {
-    display: block;
-    width: 24px;
-    height: 2px;
-    background: #333;
-    position: relative;
-    transition: all 0.3s ease;
-  }
-
-  .hamburger:before,
-  .hamburger:after {
-    content: '';
-    position: absolute;
-    width: 24px;
-    height: 2px;
-    background: #333;
-    transition: all 0.3s ease;
-  }
-
-  .hamburger:before {
-    top: -6px;
-  }
-
-  .hamburger:after {
-    bottom: -6px;
-  }
-
   @media (max-width: 768px) {
+    .navbar {
+      width: auto;
+      min-width: 200px;
+      top: 1rem;
+    }
+
     .menu-button {
       display: block;
     }
@@ -139,17 +86,47 @@
       display: none;
       position: absolute;
       top: 100%;
-      left: 0;
-      right: 0;
-      background: white;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
       padding: 1rem;
+      margin-top: 0.5rem;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      min-width: 150px;
     }
 
     .nav-links.active {
       display: flex;
+    }
+
+    .hamburger {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: #333;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger:before,
+    .hamburger:after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 2px;
+      background: #333;
+      transition: all 0.3s ease;
+    }
+
+    .hamburger:before {
+      top: -6px;
+    }
+
+    .hamburger:after {
+      bottom: -6px;
     }
 
     .hamburger.active {

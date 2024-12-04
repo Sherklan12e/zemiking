@@ -1,6 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import gloglo from '../images/gloglo.png';
+  import Comentarios from './publicar/comentarios.svelte';
 
   let items = [];
   let loading = true;
@@ -8,7 +9,7 @@
 
   onMount(async () => {
     try {
-      const response = await fetch('http://localhost:3000/');
+      const response = await fetch('http://localhost:3000/api');
       items = await response.json();
     } catch (e) {
       error = 'Error al cargar los datos';
@@ -19,57 +20,69 @@
 </script>
 
 <div class="home-container">
-  {#if loading}
-    <div class="loading">Cargando contenido...</div>
-  {:else if error}
-    <div class="error">{error}</div>
-  {:else}
-    <div class="content-layout">
-      <!-- Cards izquierdas -->
-      <div class="cards-left">
-        {#each items.slice(0, 2) as item}
-          <div class="card">
-            {#if item.image_url}
-              <img src={`http://localhost:3000/${item.image_url}`} alt={item.name} />
-            {/if}
-            <div class="card-content">
-              <h2>{item.title}</h2>
-              {#if item.link}
-                <a href={item.link} target="_blank" rel="noopener noreferrer" class="btn">
-                  Ver más
-                </a>
+  <!-- Sección principal con la imagen y cards -->
+  <section class="main-content">
+    {#if loading}
+      <div class="loading">Cargando contenido...</div>
+    {:else if error}
+      <div class="error">{error}</div>
+    {:else}
+      <div class="content-layout">
+        <!-- Cards izquierdas -->
+        <div class="cards-left">
+          {#each items.slice(0, 2) as item}
+            <div class="card">
+              {#if item.image_url}
+                <img src={`http://localhost:3000/${item.image_url}`} alt={item.name} />
               {/if}
+              <div class="card-content">
+                <h2>{item.title}</h2>
+                {#if item.link}
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" class="btn">
+                    Ver más
+                  </a>
+                {/if}
+              </div>
             </div>
-          </div>
-        {/each}
-      </div>
+          {/each}
+        </div>
 
-      <!-- Imagen central -->
-      <div class="center-image">
-        <img src={gloglo} alt="Gloglo" class="gloglo-image" />
-      </div>
+        <!-- Imagen central -->
+        <div class="center-image">
+          <img src={gloglo} alt="Gloglo" class="gloglo-image" />
+        </div>
 
-      <!-- Cards derechas -->
-      <div class="cards-right">
-        {#each items.slice(2, 4) as item}
-          <div class="card">
-            {#if item.image_url}
-              <img src={`http://localhost:3000/${item.image_url}`} alt={item.title} />
-              {console.log(`http://localhost:3000/${item.image_url}`)}
-            {/if}
-            <div class="card-content">
-              <h2>{item.title}</h2>
-              {#if item.link}
-                <a href={item.link} target="_blank" rel="noopener noreferrer" class="btn">
-                  Ver más
-                </a>
+        <!-- Cards derechas -->
+        <div class="cards-right">
+          {#each items.slice(2, 4) as item}
+            <div class="card">
+              {#if item.image_url}
+                <img src={`http://localhost:3000/${item.image_url}`} alt={item.title} />
+                {console.log(`http://localhost:3000/${item.image_url}`)}
               {/if}
+              <div class="card-content">
+                <h2>{item.title}</h2>
+                {#if item.link}
+                  <a href={item.link} target="_blank" rel="noopener noreferrer" class="btn">
+                    Ver más
+                  </a>
+                {/if}
+              </div>
             </div>
-          </div>
-        {/each}
+          {/each}
+        </div>
       </div>
+    {/if}
+  </section>
+
+  <!-- Sección de comentarios -->
+   <!-- Sección de comentarios -->
+   <section class="comments-section" id="comentarios">
+    <div class="section-divider"></div>
+    <div class="comments-wrapper">
+      <Comentarios />
     </div>
-  {/if}
+  </section>
 </div>
 
 <style>
@@ -78,6 +91,28 @@
     max-width: 1400px;
     margin: 0 auto;
     padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .main-content {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .comments-section {
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
+
+  .section-divider {
+    height: 3px;
+    background: linear-gradient(to right, transparent, #0fb8e2, transparent);
+    margin: 4rem 0;
+    opacity: 0.2;
   }
 
   .content-layout {
@@ -104,7 +139,7 @@
   }
 
   .card {
-    background: white;
+    background: rgba(255, 255, 255, 0);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -128,29 +163,37 @@
 
   .card h2 {
     margin: 0 0 1rem 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: #333;
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    line-height: 1.2;
   }
 
   .btn {
     display: inline-block;
-    padding: 0.5rem 1rem;
-    background: #ff3e00;
+    padding: 0.8rem 1.5rem;
+    background: #0899ee;
     color: white;
     text-decoration: none;
-    border-radius: 5px;
-    transition: background 0.3s ease;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    font-size: 0.95rem;
   }
 
   .btn:hover {
-    background: #ff8700;
+    background: #00a2ff;
   }
 
   .loading {
     text-align: center;
     padding: 2rem;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     color: #666;
+    font-weight: 300;
+    letter-spacing: 0.5px;
   }
 
   .error {
@@ -188,6 +231,15 @@
     .card {
       width: 100%;
     }
+
+    .home-container {
+      padding: 1rem;
+      gap: 2rem;
+    }
+
+    .main-content, .comments-section {
+      min-height: auto;
+    }
   }
 
   @keyframes float {
@@ -213,5 +265,13 @@
   }
   .cards-right .card:nth-child(2) {
     animation-delay: 1.5s;
+  }
+
+  .comments-wrapper {
+    background:white;
+    border-radius: 24px;
+    padding: 3rem 1rem;
+    margin-top: 2rem;
+    box-shadow: 0 4px 30px rgba(0,0,0,0.1);
   }
 </style>

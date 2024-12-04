@@ -16,12 +16,23 @@ CREATE TABLE `movies` (
 ENGINE=InnoDB
 ;
 
+CREATE TABLE IF NOT EXISTS `comments` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NULL DEFAULT 'Anónimo',
+  `comment` TEXT NOT NULL,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB;
+
 DESCRIBE movies;
 
 ## Datos de prueba
 INSERT INTO movies (name, year, director, genre, principal_actor, image_url) values 
   ('Hellboy', 2004 , 'Del Toro', 'Action', 'Ron Perlman', 'uploads/A.png'),
   ('Titanic', 1997 , 'James Cameron', 'Drama', 'Leonardo DiCaprio', 'uploads/mary.png'),
-  ('Hooligans', 2008 , 'Green Street Hooligans', 'Action', 'Charlie Hunnam', 'uploads/A.png');
-
+  ('Hooligans', 2008 , 'Green Street Hooligans', 'Action', 'Charlie Hunnam', 'uploads/Emetsuky.png');
+INSERT INTO comments (name, comment) VALUES 
+  ('Juan', 'Como ese posible gloglo'),
+  ('Juanito', 'boeeeeeeeeee');
 SELECT * FROM movies;

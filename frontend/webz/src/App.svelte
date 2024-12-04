@@ -2,7 +2,7 @@
   import { Router, Link, Route } from "svelte-routing";
   import Navbar from './components/layaout/navbar.svelte';
   import Home from './components/home.svelte';
-
+  import Comentarios from './components/publicar/comentarios.svelte'; 
   export let url = "";
 </script>
 
@@ -11,6 +11,7 @@
   
   <main>
     <Route path="/" component={Home} />
+    <Route path="/comentarios/:movieId" component={Comentarios} />
   </main>
 </Router>
 

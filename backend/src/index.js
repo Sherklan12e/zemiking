@@ -14,7 +14,8 @@ app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Routes
-app.use(require('./routes/movies'));
+app.use('/api', require('./routes/movies'));
+app.use('/comments', require('./routes/comments'));
 
 // Starting the server
 app.listen(app.get('port'), () => {
